@@ -33,6 +33,20 @@ class SmzdmAPP:
         }
 
         requests.utils.add_dict_to_cookiejar(self.session.cookies, cookies_)
+        
+        timestamp = int(round(time.time() * 1000))
+        task_url = 'https://user-api.smzdm.com/task/offer'
+        task_data = {
+            'weixin': '1',
+            'f': 'android',
+            'v': '9.6.5',
+            'sign': '4CAAADAD54942C999CE2A601B9E1F20A',
+            'task_id': '2624',
+            'time': timestamp,
+        }
+        task_req = self.session.post(task_url, headers=self.headers)
+        task_msg = task_req.json()['error_msg']
+        print(task_msg)
         try:
             checkin_req = self.session.post(checkin_url, headers=self.headers)
             checkin_msg = '签到结果：' + checkin_req.json()['error_msg'] + '\n'
