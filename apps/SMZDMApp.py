@@ -25,6 +25,7 @@ class SmzdmAPP:
         checkin_url = hosts + '/v1/user/checkin'
         userinfo_url = hosts + '/v1/user/info'
         lottery_url = 'https://h5.smzdm.com/user/lottery/ajax_draw'
+        turntable_url = 'https://zhiyou.smzdm.com/user/lottery/jsonp_get_current?callback=jQuery341031104756641615805_1608912596946&active_id=Wrk8ol0Eox&_='
 
         cookies_ = {
             'sess': sess,
@@ -35,6 +36,7 @@ class SmzdmAPP:
         requests.utils.add_dict_to_cookiejar(self.session.cookies, cookies_)
         
         timestamp = int(round(time.time() * 1000))
+        turntable_url = turntable_url + timestamp
         task_url = 'https://user-api.smzdm.com/task/offer'
         task_data = {
             'weixin': '1',
@@ -44,6 +46,9 @@ class SmzdmAPP:
             'task_id': '2624',
             'time': timestamp,
         }
+        turntable_req = self.session.get(turntable_url, headers=self.headers)
+        turntable_msg = turntable_req.json()
+        print(turntable_msg)
         task_req = self.session.post(task_url, headers=self.headers)
         task_msg = task_req.json()['error_msg']
         print(task_msg)
