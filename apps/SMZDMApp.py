@@ -36,7 +36,7 @@ class SmzdmAPP:
         requests.utils.add_dict_to_cookiejar(self.session.cookies, cookies_)
         
         timestamp = int(round(time.time() * 1000))
-        turntable_url = turntable_url + round(time.time() * 1000)
+        turntable_url = turntable_url + str(round(time.time() * 1000))
         task_url = 'https://user-api.smzdm.com/task/offer'
         task_data = {
             'weixin': '1',
